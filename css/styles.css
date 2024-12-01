@@ -1,14 +1,3 @@
-/*
- *
- * CSS written based on SMACSS architecture.
- * To learn more, visit: http://smacss.com/
- * 
- * For simplicity, no reset or normalize is added. 
- * To learn more, visit: https://css-tricks.com/reboot-resets-reasoning/
- *
-*/
-
-
 /* ---- Base Rules ---- */
 body {
     background: rgb(136,203,171);
@@ -18,15 +7,13 @@ body {
     color: #fff;
 }
 
-
-/* Typeography General*/
 h1 {
     font-family: 'Fira Sans', sans-serif;
     font-size: 3em;
     margin: 2em 1rem;
 }
 
-@media only screen and (min-width: 35em){
+@media only screen and (min-width: 35em) {
     h1 {
         font-size: 7em;
         margin: 2em 4rem 1em;
@@ -60,14 +47,33 @@ section {
     min-height: 80vh;
 }
 
-
-/* ---- Module Rules ---- */
-
-/* Navigation Styles*/
-.navbar__menu ul {
-    padding-left: 0;
+/* ---- General Styles ---- */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
+    padding: 0;
+}
+
+section {
+    height: 100vh;
+    padding: 2rem;
+}
+
+/* ---- Navigation Styles ---- */
+.navbar__menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.navbar__menu ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     text-align: right;
+    justify-content: flex-end;
 }
 
 .navbar__menu li {
@@ -79,22 +85,71 @@ section {
     padding: 1em;
     font-weight: bold;
     text-decoration: none;
-    color: #000;
+    color: #fff;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .navbar__menu .menu__link:hover {
-    background: #333;
+    background: #f39c12; /* Yellow hover effect */
     color: #fff;
-    transition: ease 0.3s all;
+}
+
+.navbar__menu .menu__link.active {
+    background: #2c3e50; /* Darker background for active state */
+    color: #fff;
+}
+
+/* Hamburger Menu (hidden by default) */
+.navbar__menu .hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Mobile Menu */
+@media only screen and (max-width: 768px) {
+    .navbar__menu .hamburger {
+        display: block;
+    }
+
+    .navbar__menu ul {
+        background: #333;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar__menu ul.show {
+        transform: translateX(0);
+    }
+
+    .navbar__menu li {
+        text-align: center;
+        padding: 1em;
+        width: 100%;
+    }
+
+    .navbar__menu .hamburger {
+        display: block;
+        position: absolute;
+        top: 1em;
+        right: 1em;
+    }
 }
 
 /* Header Styles */
 .page__header {
-    background: #fff;
+    background: #333;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    padding: 10px 0;
 }
 
 /* Footer Styles */
@@ -104,19 +159,17 @@ section {
     color: #fff;
 }
 
-.page__footer p{
+.page__footer p {
     color: #fff;
 }
 
-
-/* ---- Theme Rules ---- */
-/* Landing Container Styles */
+/* ---- Landing Page Container Styles ---- */
 .landing__container {
     padding: 1em;
     text-align: left;
 }
 
-@media only screen and (min-width: 35em){
+@media only screen and (min-width: 35em) {
     .landing__container {
         max-width: 50em;
         padding: 4em;
@@ -126,12 +179,10 @@ section {
 section:nth-of-type(even) .landing__container {
     margin-right: 0;
     margin-left: auto;
-    text-align: right; 
+    text-align: right;
 }
 
 /* Background Circles */
-/* Note that background circles are created with psuedo elements before and after */
-/* Circles appear to be random do to use of :nth-of-type psuedo class */
 section:nth-of-type(odd) .landing__container::before {
     content: '';
     background: rgba(255, 255, 255, 0.187);
@@ -189,35 +240,47 @@ section:nth-of-type(3n + 1) .landing__container::after {
     transition: ease 0.5s all;
 }
 
-
-/* ---- Theme State Rules ---- */
 /* Section Active Styles */
-/* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
 section.your-active-class {
+    background-color: #f39c12; /* Active section highlighted */
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Active Navbar Link Styling */
+.navbar__menu .menu__link.active {
+    background: #333;
+    color: #fff;
+}
+
+/* Active Section Styling */
+section.active {
     background: rgb(0, 0, 0);
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-section.your-active-class .landing__container::before {
-    opacity: 1;
-    animation: rotate 4s linear 0s infinite forwards;
+/* Mobile Navigation Transitions */
+.navbar__menu ul {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%); /* Initially hidden off-screen */
 }
 
-section.your-active-class .landing__container::after {
-    opacity: 1;
-    animation: rotate 5s linear 0s infinite forwards reverse;
+.navbar__menu ul.show {
+    transform: translateX(0); /* Slide in */
 }
 
-/* Section Active Styles Keyframe Animations */
-@keyframes rotate {
-	from {
-		transform: rotate(0deg)
-		           translate(-1em)
-		           rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg)
-		           translate(-1em) 
-		           rotate(-360deg);
-	}
+/* Hamburger Icon */
+.navbar__menu .hamburger {
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    z-index: 6;
+}
+
+/* Header Space Adjustment */
+main {
+    margin-top: 4em; /* Adjust based on header height */
 }
