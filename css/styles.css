@@ -20,6 +20,7 @@ header {
   z-index: 1000;
   box-shadow: 0 4px 2px -2px gray;
 }
+
 /* General Section Styles */
 section {
   padding: 20px;
@@ -28,6 +29,7 @@ section {
   color: white;
 }
 
+/* ---- Navigation Styles ---- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -35,12 +37,12 @@ section {
   background-color: #333;
   padding: 10px 20px;
 }
+
 .navbar__menu {
   display: flex;
   gap: 15px;
 }
 
-/* ---- Navigation Styles ---- */
 .navbar__menu ul {
   list-style: none; /* Updated list styles */
   margin: 0;
@@ -61,7 +63,7 @@ section {
 }
 
 .menu__link.active {
-  background-color: red;
+  background-color: #555;
   color: white;
   font-weight: bold;
 }
@@ -96,6 +98,7 @@ section {
   transition: background 0.3s ease; /* Smooth transition */
 }
 
+/* ---- Responsive Design ---- */
 @media (max-width: 480px) {
   .hamburger {
     display: block; /* Show hamburger menu on small screens */
@@ -115,7 +118,7 @@ section {
     display: flex; /* Show menu when toggled */
   }
 }
-/* Mobile Styles */
+
 @media (max-width: 768px) {
   .navbar__menu {
     display: none;
@@ -134,9 +137,13 @@ section {
   .hamburger {
     display: block;
   }
+
+  section {
+    padding: 15px;
+    font-size: 14px;
+  }
 }
 
-/* Desktop Styles */
 @media (min-width: 769px) {
   .navbar__menu {
     display: flex;
@@ -145,75 +152,5 @@ section {
 
   .hamburger {
     display: none; /* Hide the hamburger icon */
-  }
-}
-
-/* General Navbar Styles */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  background-color: #333;
-}
-
-.navbar__menu {
-  display: flex;
-  gap: 15px;
-}
-
-.menu__link {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.menu__link.active {
-  background-color: #555;
-  color: #fff;
-}
-
-.hamburger {
-  display: none;
-  cursor: pointer;
-  font-size: 24px;
-  color: #fff;
-}
-
-/* Responsive Design for Smaller Screens */
-@media (max-width: 768px) {
-  .navbar__menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background-color: #333;
-    width: 100%;
-    padding: 10px 0;
-  }
-
-  .navbar__menu.show {
-    display: flex;
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
-
-.menu__link.active {
-  background-color: red;
-  color: white;
-  font-weight: bold;
-}
-
-/* Responsive Sections for Smaller Screens */
-@media (max-width: 768px) {
-  section {
-    padding: 15px;
-    font-size: 14px;
   }
 }

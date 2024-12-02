@@ -25,23 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const targetId = link.getAttribute("href").substring(1);
       const targetSection = document.getElementById(targetId);
-  
+      
       // Calculate the offset position
       const offset = 50; // Adjust this value to match your navbar height
       const sectionPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
-  
+      
       // Smoothly scroll to the adjusted position
       window.scrollTo({
         top: sectionPosition,
         behavior: "smooth",
       });
+
+      // Close menu on link click
+      if (menu.classList.contains("show")) {
+        menu.classList.remove("show");
+      }
     });
   });
-  
+
   // Function to highlight active section and navbar link
   function setActiveSection() {
     let currentSection = "";
-  
+    
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
       const offset = 50; // Adjust to match your navbar height
@@ -52,14 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
         currentSection = section.id;
       }
     });
-  
+
     navLinks.forEach((link) => {
       link.classList.remove("active");
       if (link.getAttribute("href").substring(1) === currentSection) {
         link.classList.add("active");
       }
     });
-  
+
     sections.forEach((section) => {
       section.classList.remove("your-active-class");
       if (section.id === currentSection) {
@@ -67,36 +72,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-  
 
-  // Scroll event listener
-  window.addEventListener("scroll", setActiveSection);
-
-  // Smooth scrolling for navigation links
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute("href").substring(1);
-      const targetSection = document.getElementById(targetId);
-      targetSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    });
+  // Scroll event listener using requestAnimationFrame
+  window.addEventListener("scroll", () => {
+    requestAnimationFrame(setActiveSection);
   });
 
   // Hamburger menu toggle
   hamburger.addEventListener("click", () => {
     menu.classList.toggle("show");
-  });
-
-  // Close menu on link click
-  navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      if (menu.classList.contains("show")) {
-        menu.classList.remove("show");
-      }
-    });
   });
 
   // Set active section on page load
