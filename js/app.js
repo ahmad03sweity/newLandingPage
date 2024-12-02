@@ -1,52 +1,65 @@
-const sections = document.querySelectorAll("section");
-const navbar = document.getElementById("navbar");
 document.addEventListener("DOMContentLoaded", () => {
-  // Loop through each section and create corresponding <li> in the navigation
+  const sections = document.querySelectorAll("section");
+  const navbar = document.getElementById("navbar");
+  const hamburger = document.querySelector(".hamburger");
+  const menu = document.querySelector(".navbar__menu");
+
+  // Dynamically create navigation links
   sections.forEach((section) => {
     const sectionId = section.id;
     const sectionTitle = section.getAttribute("data-nav");
 
-    // Create the <li> element
     const li = document.createElement("li");
-
-    // Create an <a> element to link to the section
     const a = document.createElement("a");
     a.href = `#${sectionId}`;
     a.textContent = sectionTitle;
-
-    // Add a class for styling active state in navigation
     a.classList.add("menu__link");
-
-    // Append the <a> inside the <li>
     li.appendChild(a);
-
-    // Append the <li> to the <ul> (navbar)
     navbar.appendChild(li);
   });
 
   const navLinks = document.querySelectorAll(".menu__link");
 
-  // Function to highlight the active section and corresponding navbar link
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href").substring(1);
+      const targetSection = document.getElementById(targetId);
+  
+      // Calculate the offset position
+      const offset = 50; // Adjust this value to match your navbar height
+      const sectionPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
+  
+      // Smoothly scroll to the adjusted position
+      window.scrollTo({
+        top: sectionPosition,
+        behavior: "smooth",
+      });
+    });
+  });
+  
+  // Function to highlight active section and navbar link
   function setActiveSection() {
     let currentSection = "";
-
+  
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
+      const offset = 50; // Adjust to match your navbar height
       if (
-        rect.top >= -section.clientHeight / 2 &&
-        rect.top < window.innerHeight / 2
+        rect.top >= -section.clientHeight / 2 - offset &&
+        rect.top < window.innerHeight / 2 - offset
       ) {
         currentSection = section.id;
       }
     });
-
+  
     navLinks.forEach((link) => {
       link.classList.remove("active");
       if (link.getAttribute("href").substring(1) === currentSection) {
         link.classList.add("active");
       }
     });
-
+  
     sections.forEach((section) => {
       section.classList.remove("your-active-class");
       if (section.id === currentSection) {
@@ -54,11 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+  
 
-  // Event listener for scrolling to update the active section and navbar link
+  // Scroll event listener
   window.addEventListener("scroll", setActiveSection);
 
-  // Function to scroll to the section when a link is clicked
+  // Smooth scrolling for navigation links
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -71,15 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Initial call to set the active section when the page loads
-  setActiveSection();
-});
-document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger");
-  const menu = document.querySelector(".navbar__menu");
+  // Hamburger menu toggle
+  hamburger.addEventListener("click", () => {
+    menu.classList.toggle("show");
+  });
 
-  // Close menu on navigation link click (mobile)
-  const navLinks = document.querySelectorAll(".menu__link");
+  // Close menu on link click
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
       if (menu.classList.contains("show")) {
@@ -88,8 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Toggle menu on hamburger click
-  hamburger.addEventListener("click", () => {
-    menu.classList.toggle("show");
-  });
+  // Set active section on page load
+  setActiveSection();
 });
