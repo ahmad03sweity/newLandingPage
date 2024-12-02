@@ -11,6 +11,11 @@ body {
   color: #fff;
   line-height: 1.6; /* Added line-height */
 }
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 
 header {
   position: sticky; /* Added header styles */
@@ -28,9 +33,32 @@ section {
   background: linear-gradient(to bottom, #1e3c72, #2a5298);
   color: white;
 }
+#navbar {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Arrange items in a row */
+  justify-content: space-around; /* Space items evenly */
+}
+
+#navbar li {
+  display: inline; /* Ensure list items are inline */
+}
+
+.menu__link {
+  color: white; /* Text color */
+  text-decoration: none; /* Remove underline */
+  padding: 10px 20px; /* Spacing around the links */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.menu__link:hover {
+  background-color: #444; /* Hover effect */
+}
 
 /* ---- Navigation Styles ---- */
 .navbar {
+  list-style-type: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -128,6 +156,17 @@ section {
     right: 0;
     background-color: #333;
     width: 100%;
+  }
+  #navbar {
+    flex-direction: column; /* Change to vertical layout */
+    align-items: flex-start; /* Align items to the start */
+  }
+  #navbar li {
+    display: block; /* Ensure list items are block */
+    width: 100%; /* Full width for each item */
+  }
+  .menu__link {
+    padding: 10px; /* Adjust padding */
   }
 
   .navbar__menu.show {

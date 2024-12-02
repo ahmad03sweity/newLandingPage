@@ -26,19 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetId = link.getAttribute("href").substring(1);
       const targetSection = document.getElementById(targetId);
       
-      // Calculate the offset position
-      const offset = 50; // Adjust this value to match your navbar height
-      const sectionPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
-      
-      // Smoothly scroll to the adjusted position
-      window.scrollTo({
-        top: sectionPosition,
-        behavior: "smooth",
-      });
+      if (targetSection) { // Ensure targetSection exists
+        // Calculate the offset position
+        const offset = 50; // Adjust this value to match your navbar height
+        const sectionPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
+        
+        // Smoothly scroll to the adjusted position
+        window.scrollTo({
+          top: sectionPosition,
+          behavior: "smooth",
+        });
 
-      // Close menu on link click
-      if (menu.classList.contains("show")) {
-        menu.classList.remove("show");
+        // Close menu on link click
+        if (menu && menu.classList.contains("show")) {
+          menu.classList.remove("show");
+        }
       }
     });
   });
@@ -46,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to highlight active section and navbar link
   function setActiveSection() {
     let currentSection = "";
-    
+
     sections.forEach((section) => {
       const rect = section.getBoundingClientRect();
       const offset = 50; // Adjust to match your navbar height
@@ -78,10 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(setActiveSection);
   });
 
-  // Hamburger menu toggle
-  hamburger.addEventListener("click", () => {
-    menu.classList.toggle("show");
-  });
+  if (hamburger) {
+    hamburger.addEventListener("click", () => {
+      if (menu) {
+        menu.classList.toggle("show");
+      }
+    });
+  }
 
   // Set active section on page load
   setActiveSection();
