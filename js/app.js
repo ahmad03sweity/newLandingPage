@@ -74,3 +74,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial call to set the active section when the page loads
   setActiveSection();
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const menu = document.querySelector(".navbar__menu");
+
+  // Close menu on navigation link click (mobile)
+  const navLinks = document.querySelectorAll(".menu__link");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      if (menu.classList.contains("show")) {
+        menu.classList.remove("show");
+      }
+    });
+  });
+
+  // Toggle menu on hamburger click
+  hamburger.addEventListener("click", () => {
+    menu.classList.toggle("show");
+  });
+});

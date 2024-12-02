@@ -77,18 +77,6 @@ header {
   transition: background 0.3s ease; /* Smooth transition */
 }
 
-/* ---- Responsive Styles ---- */
-@media (max-width: 768px) {
-  .navbar__menu ul {
-    flex-direction: column; /* Stack menu items */
-    align-items: center; /* Center items */
-  }
-
-  .menu__link {
-    display: block; /* Adjusted for mobile view */
-  }
-}
-
 @media (max-width: 480px) {
   .hamburger {
     display: block; /* Show hamburger menu on small screens */
@@ -106,5 +94,47 @@ header {
 
   .navbar__menu ul.show {
     display: flex; /* Show menu when toggled */
+  }
+}
+/* Mobile Styles */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar__menu {
+    display: none; /* Hidden by default */
+  }
+
+  .navbar__menu.show {
+    display: flex; /* Show when toggled */
+    flex-direction: column;
+  }
+
+  .hamburger {
+    display: block; /* Show the hamburger menu icon */
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .navbar__menu {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .hamburger {
+    display: none; /* Hide the hamburger icon */
   }
 }
