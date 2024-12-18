@@ -3,83 +3,79 @@ document.addEventListener("DOMContentLoaded", () => {
   const navbar = document.getElementById("navbar");
   const hamburger = document.querySelector(".hamburger");
   const menu = document.querySelector(".navbar__menu");
+  const header = document.querySelector(".page__header");
+  const footer = document.querySelector("footer");
 
-  // Dynamically create navigation links
-  sections.forEach((section) => {
-    const sectionId = section.id;
-    const sectionTitle = section.getAttribute("data-nav");
-
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.href = `#${sectionId}`;
-    a.textContent = sectionTitle;
-    a.classList.add("menu__link");
-    li.appendChild(a);
-    navbar.appendChild(li);
-  });
-
-  const navLinks = document.querySelectorAll(".menu__link");
-
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute("href").substring(1);
-      const targetSection = document.getElementById(targetId);
-      
-      if (targetSection) { // Ensure targetSection exists
-        // Calculate the offset position
-        const offset = 50; // Adjust this value to match your navbar height
-        const sectionPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
-        
-        // Smoothly scroll to the adjusted position
-        window.scrollTo({
-          top: sectionPosition,
-          behavior: "smooth",
-        });
-
-        // Close menu on link click
-        if (menu && menu.classList.contains("show")) {
-          menu.classList.remove("show");
-        }
-      }
-    });
-  });
-
-  // Function to highlight active section and navbar link
-  function setActiveSection() {
-    let currentSection = "";
-
+  // Build the navigation bar dynamically by iterating through each section
+  function buildNav() {
     sections.forEach((section) => {
-      const rect = section.getBoundingClientRect();
-      const offset = 50; // Adjust to match your navbar height
-      if (
-        rect.top >= -section.clientHeight / 2 - offset &&
-        rect.top < window.innerHeight / 2 - offset
-      ) {
-        currentSection = section.id;
-      }
-    });
+      const sectionId = section.id;
+      const sectionTitle = section.getAttribute("data-nav");
 
-    navLinks.forEach((link) => {
-      link.classList.remove("active");
-      if (link.getAttribute("href").substring(1) === currentSection) {
-        link.classList.add("active");
-      }
-    });
+      const li = document.createElement("li");
+      li.insertAdjacentHTML(
+        "afterbegin",
+        `<a href="#${sectionId}" class="menu__link">${sectionTitle}</a>`
+      );
+      navbar.appendChild(li);
 
-    sections.forEach((section) => {
-      section.classList.remove("your-active-class");
-      if (section.id === currentSection) {
+      scrollBehavior(li, section); // Add smooth scrolling to the navigation link
+    });
+  }
+
+  // Implement smooth scrolling when navigation links are clicked
+  function scrollBehavior(navButton, section) {
+    navButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+        top: section.offsetTop,
+        behavior: "smooth",
+      });
+    });
+  }
+
+  // Highlight the active section and corresponding navigation link
+  function activeSection() {
+    const navLinks = document.querySelectorAll(".menu__link");
+    sections.forEach((section, i) => {
+      const sectionRect = section.getBoundingClientRect();
+      if (sectionRect.top <= 380 && sectionRect.bottom >= 350) {
         section.classList.add("your-active-class");
+        navLinks[i].classList.add("active_button");
+      } else {
+        section.classList.remove("your-active-class");
+        navLinks[i].classList.remove("active_button");
       }
     });
   }
 
-  // Scroll event listener using requestAnimationFrame
-  window.addEventListener("scroll", () => {
-    requestAnimationFrame(setActiveSection);
+  // Hide the navigation bar when the user is not scrolling
+  function toggleNavBar() {
+    let userScroll;
+    header.style.cssText = "opacity: 1; transition: ease 0.3s;";
+    window.clearTimeout(userScroll);
+    userScroll = setTimeout(() => {
+      header.style.cssText = "opacity: 0; transition: ease 0.3s;";
+    }, 6000);
+  }
+
+  // Add a scroll-to-top button and handle its click event
+  footer.insertAdjacentHTML("beforebegin", `<div id="return_top"></div>`);
+  document.getElementById("return_top").addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   });
 
+  // Initialize the navigation bar and add event listeners for scroll events
+  buildNav();
+  window.addEventListener("scroll", () => {
+    activeSection();
+    toggleNavBar();
+  });
+
+  // Handle hamburger menu toggle for mobile responsiveness
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       if (menu) {
@@ -87,7 +83,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  // Set active section on page load
-  setActiveSection();
 });

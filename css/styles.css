@@ -7,10 +7,11 @@ body {
     rgba(0, 13, 60, 1) 100%
   );
   margin: 0;
-  font-family: Arial, sans-serif; /* Updated font-family */
+  font-family: 'Merriweather', serif; /* Updated font-family */
   color: #fff;
-  line-height: 1.6; /* Added line-height */
+  line-height: 1.6; /* Maintained */
 }
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -18,9 +19,9 @@ ul {
 }
 
 header {
-  position: sticky; /* Added header styles */
+  position: sticky; /* Maintained */
   top: 0;
-  background: #333;
+  background: rgb(75, 75, 75); /* Updated background color */
   color: #fff;
   z-index: 1000;
   box-shadow: 0 4px 2px -2px gray;
@@ -30,156 +31,115 @@ header {
 section {
   padding: 20px;
   margin: 20px;
-  background: linear-gradient(to bottom, #1e3c72, #2a5298);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
   color: white;
+  height: 90vh; /* Updated height */
 }
+
 #navbar {
-  list-style-type: none; /* Remove bullet points */
+  list-style-type: none;
   padding: 0;
   margin: 0;
-  display: flex; /* Arrange items in a row */
-  justify-content: space-around; /* Space items evenly */
+  display: flex;
+  justify-content: center; /* Updated alignment */
 }
 
 #navbar li {
-  display: inline; /* Ensure list items are inline */
+  display: inline;
+  position: relative; /* Updated */
 }
 
 .menu__link {
-  color: white; /* Text color */
-  text-decoration: none; /* Remove underline */
-  padding: 10px 20px; /* Spacing around the links */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 18px; /* Updated font size */
+  font-weight: 600; /* Updated font weight */
+  transition: background-color 0.3s, color 0.3s; /* Added color transition */
 }
 
 .menu__link:hover {
-  background-color: #444; /* Hover effect */
+  background-color: rgba(51, 51, 51, 0.582);
+  color: rgba(201, 90, 90, 0.712); /* Updated hover effect */
+}
+
+.menu__link.active {
+  background-color: #051440; /* Updated active state */
+  color: rgb(201, 90, 90) !important; /* Updated */
 }
 
 /* ---- Navigation Styles ---- */
 .navbar {
   list-style-type: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Updated alignment */
   align-items: center;
-  background-color: #333;
+  background-color: rgb(75, 75, 75); /* Updated */
   padding: 10px 20px;
 }
 
-.navbar__menu {
-  display: flex;
-  gap: 15px;
-}
-
 .navbar__menu ul {
-  list-style: none; /* Updated list styles */
-  margin: 0;
-  padding: 0;
+  margin: 0px 0px 0px -80px; /* Updated margin */
   display: flex;
-  justify-content: center; /* Center alignment */
+  flex-wrap: wrap; /* Updated layout */
+  align-items: center;
+  justify-content: center; /* Updated alignment */
 }
 
-.navbar__menu ul li {
-  margin: 0 15px; /* Adjusted spacing */
-}
-
-.menu__link {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px;
-  transition: background-color 0.3s;
-}
-
-.menu__link.active {
-  background-color: #555;
-  color: white;
-  font-weight: bold;
-}
-
-.menu__link:hover {
-  background: #444; /* Updated hover effect */
-}
-
-.hamburger {
-  display: none;
-  cursor: pointer;
-  font-size: 24px;
-  color: #fff;
+.navbar__menu ul li::before {
+  content: "";
+  width: 100%;
+  height: 6px;
+  background-color: rgb(201, 90, 90);
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  z-index: 8;
 }
 
 /* ---- Section Styles ---- */
 .section {
-  min-height: 100vh; /* Adjusted minimum height */
+  min-height: 100vh;
   padding: 2rem;
-  scroll-margin-top: 50px; /* Adjust to match your navbar height */
-  background: #f4f4f4;
+  scroll-margin-top: 50px;
   border-bottom: 1px solid #ddd;
   text-align: center;
-}
-
-.section:nth-child(even) {
-  background: #ddd; /* Alternating background colors */
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.2) 100%);
 }
 
 .section.your-active-class {
-  background: #a2d2ff; /* Updated active section background */
-  transition: background 0.3s ease; /* Smooth transition */
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+  transition: background 0.3s ease;
+}
+
+.section.your-active-class .landing__container::before {
+  opacity: 1;
+  animation: rotate 4s linear 0s infinite forwards;
+}
+
+.section.your-active-class .landing__container::after {
+  opacity: 1;
+  animation: rotate 5s linear 0s infinite forwards reverse;
 }
 
 /* ---- Responsive Design ---- */
 @media (max-width: 480px) {
   .hamburger {
-    display: block; /* Show hamburger menu on small screens */
+    display: block;
   }
 
   .navbar__menu ul {
-    display: none; /* Hide menu initially */
-    flex-direction: column; /* Stack menu items */
+    display: none;
+    flex-direction: column;
     position: absolute;
     top: 4rem;
     width: 100%;
-    background: #333;
+    background: rgb(75, 75, 75); /* Updated */
     text-align: center;
   }
 
   .navbar__menu ul.show {
-    display: flex; /* Show menu when toggled */
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar__menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: #333;
-    width: 100%;
-  }
-  #navbar {
-    flex-direction: column; /* Change to vertical layout */
-    align-items: flex-start; /* Align items to the start */
-  }
-  #navbar li {
-    display: block; /* Ensure list items are block */
-    width: 100%; /* Full width for each item */
-  }
-  .menu__link {
-    padding: 10px; /* Adjust padding */
-  }
-
-  .navbar__menu.show {
     display: flex;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  section {
-    padding: 15px;
-    font-size: 14px;
   }
 }
 
@@ -190,6 +150,6 @@ section {
   }
 
   .hamburger {
-    display: none; /* Hide the hamburger icon */
+    display: none;
   }
 }
